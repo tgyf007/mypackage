@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"math"
-	"os"
 	"regexp"
 	"strconv"
 	"strings"
@@ -12,39 +11,36 @@ import (
 
 var sixteenMap = map[string]int{`A`: 10, `B`: 11, `C`: 12, `D`: 13, `E`: 14, `F`: 15}
 
-func Convert() {
-	if len(os.Args) < 4 {
+func Convert(s string, from, to int) (ret string, err error) {
+	if len(s) == 0 || from == 0 || to == 0 {
+		ret = ``
 		return
 	}
-	s := os.Args[1]
-	fromType, _ := strconv.Atoi(os.Args[2])
-	toType := os.Args[3]
 
 	var re int
-	var err error
-	if fromType != 10 {
-		re, err = convert(s, fromType)
+	if from != 10 {
+		re, err = convert(s, from)
 		if err != nil {
-			fmt.Println(err)
+			return
 		}
 	} else {
 		re, _ = strconv.Atoi(s)
 	}
 
-	switch toType {
-	case `2`:
-		fmt.Printf("%b", re)
+	switch to {
+	case 2:
+		ret = fmt.Sprintf("%b", re)
 		break
-	case `8`:
-		fmt.Printf("%o", re)
+	case 8:
+		ret = fmt.Sprintf("%o", re)
 		break
-	case `16`:
-		fmt.Printf("%X", re)
+	case 16:
+		ret = fmt.Sprintf("%X", re)
 		break
 	default:
-		fmt.Println(re)
+		ret = string(re)
 	}
-
+	return
 }
 
 func convert(v string, conType int) (re int, err error) {
