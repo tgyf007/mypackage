@@ -38,3 +38,10 @@ func BtoS(binary string) (ret string) {
 	}
 	return
 }
+
+func BuildString(by, num int) (res string) {
+	for i := 0; i < num; i++ {
+		res += string(by)
+	}
+	return
+}
